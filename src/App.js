@@ -1,11 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import React from "react";
+import "./App.css";
+import Header from "./components/header";
+import Events from "./components/tabs";
+import Box from "@mui/material/Box";
 
 function App() {
   return (
-    <div className="App">
-        Hi from Lounge
-    </div>
+    <Box sx={{ m: 1, p: 1 }}>
+      <Header />
+      <Events />
+    </Box>
   );
 }
 
