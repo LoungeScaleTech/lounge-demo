@@ -1,16 +1,9 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import SingleEvent from "../singleEvent";
 import Grid from "@mui/material/Grid";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../lib/firebase";
-
-getDoc(doc(db, "users", "tFpAUYlrZufAZFUp2gH0yv7m45k2")).then((docSnap) => {
-  if (docSnap.exists()) {
-    console.log("Document data:", docSnap.data());
-  } else {
-    console.log("No such document!");
-  }
-});
+const userId = "tFpAUYlrZufAZFUp2gH0yv7m45k2";
 
 const sampleEventsData = [
   {
@@ -39,17 +32,33 @@ const sampleEventsData = [
 //Map each event so SingleEvent Card
 //Add styling to be side by side
 const Events = ({ eventsData = sampleEventsData }) => {
+  const [userEventsData, setUserEventsData] = useState([]);
+  useEffect(() => {
+    getDoc(doc(db, "users", userId)).then((docSnap) => {
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        setUserEventsData(docSnap.data().events);
+      } else {
+        console.log("No such document!");
+      }
+    });
+  }, [userId]);
+  console.log("userEventsData", userEventsData);
+  const inputData = Object.entries(userEventsData).map(([key, value]) => ({
+    ...value,
+  }));
+
   return (
     <>
       <Grid container>
-        {eventsData.map((event) => (
+        {inputData.map((event) => (
           <Grid item xs={6}>
             <SingleEvent
               eventImageLink={event.image_src}
               eventMonth="Feb"
               eventDate="10th"
               eventStartTime="20:00"
-              eventName={event.name}
+              eventName={event.name ? event.name : "Your event"}
             />
           </Grid>
         ))}

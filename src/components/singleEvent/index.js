@@ -43,7 +43,7 @@ export default function SingleEvent({
             style={eventStyles.image}
           />
           <CardContent style={{ height: "7vh", boxShadow: "none" }}>
-            <p style={{ fontWeight: "bold", fontSize: "120%" }}>{eventName}</p>
+            <p style={{ fontWeight: "bold", fontSize: "100%" }}>{eventName}</p>
             <p>{eventStartTime}</p>
           </CardContent>
         </CardActionArea>
